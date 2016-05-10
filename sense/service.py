@@ -1,4 +1,5 @@
-from sense.cache import Cache
+from .cache import Cache
+from . import __version__
 
 import datetime as dt
 import requests
@@ -107,6 +108,7 @@ class Sense(object):
         Internal wrapper to help make API requests.
         """
         headers = {} if headers is None else headers
+        headers['User-Agent'] = "python-sense/{}".format(__version__)
 
         if auth:
             token = self.cache.get("token")
