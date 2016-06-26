@@ -17,7 +17,16 @@ def test(sense):
 if __name__ == "__main__":
     client_id = input("Sense OAuth Client ID: ")
     client_secret = input("Sense OAuth Client Secret: ")
-    sense = Sense(client_id=client_id, client_secret=client_secret)
+
+    # Doing this will write out the client keys, so we can reload the Sense
+    # API wrapper later.
+    Sense().cache.write("client_keys", {
+        "client_id": client_id,
+        "client_secret": client_secret,
+    })
+
+    # Now we know about the keys on disk, let's make sure that works right.
+    sense = Sense()
 
     login(sense)
     print("Success!")

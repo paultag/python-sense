@@ -31,6 +31,12 @@ class Sense(object):
         api_base="https://api.hello.is",
     ):
         self.cache = Cache(base_dir=cache_dir)
+        keys = self.cache.get("client_keys")
+
+        if (client_id is None or client_secret is None) and keys is not None:
+            client_id = keys.get("client_id", client_id)
+            client_secret = keys.get("client_secret", client_secret)
+
         self.client_id = client_id
         self.client_secret = client_secret
         self.api_base = api_base
